@@ -9,6 +9,9 @@ namespace AddressBook.Services;
 
 internal class Menu
 {
+    private readonly UserList _userList = new UserList();
+
+
     public void MainMenu() { 
             
         while (true)
@@ -32,7 +35,7 @@ internal class Menu
                         AddMenu();
                         break;
                     case 2:
-                        Console.WriteLine("du valde 2");
+                        ViewContacts();
                         break;
                     case 3:
                         Console.WriteLine("du valde 3");
@@ -71,6 +74,9 @@ internal class Menu
         Console.Write("Ange Email: ");
         user.Email = Console.ReadLine()!;
 
+        Console.Write("Ange Address: ");
+        user.Address = Console.ReadLine()!;
+
         Console.Write("Ange Telefon Nummer: ");
         if (int.TryParse(Console.ReadLine(), out int phoneNumber))
         {
@@ -80,11 +86,29 @@ internal class Menu
         {
             Console.WriteLine("Ogiltigt telefonnummer");
         }
-           
+        _userList.AddUserToUserList(user);
             
 
     }
 
+    private void ViewContacts()
+    {
+        Console.Clear();
+        var users = _userList.GetUsers();
+
+        foreach (var user in users)
+        {
+            Console.WriteLine($"Namn: {user.FirstName} {user.LastName}, Email: {user.Email}, Address: {user.Address},Telefon: {user.PhoneNumber}");
+        }
+
+        Console.WriteLine("Tryck på en knapp för att komma tillbaka till huvudmeny...");
+        Console.ReadKey();
+    }
+
+
 
 
 }
+
+
+
