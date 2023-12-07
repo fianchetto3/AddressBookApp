@@ -22,7 +22,7 @@ internal class Menu
             Console.WriteLine("2. Se alla Kontakter ");
             Console.WriteLine("3. Kontaktinformation ");
             Console.WriteLine("4. Ta bort Kontakt");
-            Console.WriteLine("5. Avsluta");
+            
 
 
             int choice;
@@ -42,9 +42,6 @@ internal class Menu
                         break;
                     case 4:
                         Console.WriteLine("du valde 4");
-                        break;
-                    case 5:
-                        Console.WriteLine("du valde 5");
                         break;
                     default:
                         Console.WriteLine("Ogiligt val. Försök igen");
@@ -78,14 +75,7 @@ internal class Menu
         user.Address = Console.ReadLine()!;
 
         Console.Write("Ange Telefon Nummer: ");
-        if (int.TryParse(Console.ReadLine(), out int phoneNumber))
-        {
-            user.PhoneNumber = phoneNumber;
-        }
-        else
-        {
-            Console.WriteLine("Ogiltigt telefonnummer");
-        }
+        user.PhoneNumber = Console.ReadLine()!;
         _userList.AddUserToUserList(user);
             
 
