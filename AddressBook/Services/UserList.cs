@@ -25,6 +25,11 @@ namespace AddressBook.Services
             return user ??= null!;
         }
 
+        public void RemoveUserFromUserList (User user) 
+        { 
+         _users.Remove(user);
+        }
+
         public List<User> GetUsers() 
         {  return _users; }
     }

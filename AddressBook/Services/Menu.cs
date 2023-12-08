@@ -17,13 +17,14 @@ internal class Menu
         while (true)
         {
             Console.Clear();
-            Console.WriteLine("Välkommen till din AddressBook. Välj mellan 1-5");
+            Console.WriteLine("## Välkommen till din AddressBook. Välj mellan 1-5 ##");
             Console.WriteLine("1. Lägg till kontakt");
             Console.WriteLine("2. Se alla Kontakter ");
             Console.WriteLine("3. Kontaktinformation ");
             Console.WriteLine("4. Ta bort Kontakt");
-            
+            Console.WriteLine("5. Avsluta");
 
+         
 
             int choice;
 
@@ -38,17 +39,19 @@ internal class Menu
                         ViewContacts();
                         break;
                     case 3:
-                        Console.WriteLine("du valde 3");
+                        ViewContactInformation();
                         break;
                     case 4:
-                        Console.WriteLine("du valde 4");
+                        RemoveUser();
+                        break;
+                        case 5:
+                        Console.WriteLine("Tack för att du använder AdressBook. Programmet Avslutas.");
+                            Environment.Exit(5);
                         break;
                     default:
                         Console.WriteLine("Ogiligt val. Försök igen");
+                        Console.ReadKey();
                         break;
-
-
-
                 }
             }
 
@@ -77,7 +80,9 @@ internal class Menu
         Console.Write("Ange Telefon Nummer: ");
         user.PhoneNumber = Console.ReadLine()!;
         _userList.AddUserToUserList(user);
-            
+
+        Console.WriteLine("Kontakt Tillagd!, Tryck på en knapp för att komma tillbaka till huvudmeny...");
+        Console.ReadKey();
 
     }
 
@@ -88,14 +93,65 @@ internal class Menu
 
         foreach (var user in users)
         {
-            Console.WriteLine($"Namn: {user.FirstName} {user.LastName}, Email: {user.Email}, Address: {user.Address},Telefon: {user.PhoneNumber}");
+            Console.WriteLine($"Namn: {user.FirstName} {user.LastName}, {user.Email}");
         }
 
         Console.WriteLine("Tryck på en knapp för att komma tillbaka till huvudmeny...");
         Console.ReadKey();
     }
+    
+    private void ViewContactInformation()
+    {
+        Console.Clear();
 
+        var user = new User();
+        var users = _userList.GetUsers();
+        
+        Console.Write("Ange användarens email för att visa information: ");
+        string userEmail = Console.ReadLine();
 
+        Console.Clear();
+
+        var selectedUser = _userList.GetUserFromUserList(userEmail);   /// selectedUser hämtar ut användarens email från UserList. userEmail kan vara null men checkas i If satsen.
+        if (selectedUser != null)
+        {
+            Console.WriteLine($"Namn: {selectedUser.FirstName} {selectedUser.LastName}");  /// fårn GetUserFromUserList klassen hämtas korrekt info om användaren baserat på Epost.
+            Console.WriteLine($"Email: {selectedUser.Email}");
+            Console.WriteLine($"Address: {selectedUser.Address}");
+            Console.WriteLine($"Telefon: {selectedUser.PhoneNumber}");
+        }
+        else
+        {
+            Console.WriteLine("Användaren hittades inte.");
+
+        }
+        Console.WriteLine("Tryck på en knapp för att komma tillbaka till huvudmeny...");
+        Console.ReadKey();
+    }
+
+    private void RemoveUser() 
+    {
+
+        Console.Clear();
+        Console.Write("ange email för användaren du vill ta bort: ");
+        var user = new User();
+        string userEmail = Console.ReadLine();
+
+        Console.Clear();
+
+        var userToRemove = _userList.GetUserFromUserList(userEmail);   /// samma logik som i ViewContactInformation 
+        if (userToRemove != null)
+        {
+            _userList.RemoveUserFromUserList(userToRemove);
+            Console.WriteLine($" Användaren har tagits bort...");
+        }
+        else 
+        {
+            Console.WriteLine($"användaren med email {userEmail} kunde inte hittas. ");
+        }
+        Console.WriteLine("Tryck på en knapp för att komma tillbaka till huvudmeny...");
+        Console.ReadKey();
+    }
 
 
 }
