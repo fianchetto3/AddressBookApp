@@ -89,11 +89,14 @@ internal class Menu
     private void ViewContacts()
     {
         Console.Clear();
-        var users = _userList.GetUsers();
+        var users = _userList.GetUsersFromJsonList();
 
         foreach (var user in users)
         {
-            Console.WriteLine($"Namn: {user.FirstName} {user.LastName}, {user.Email}");
+            Console.WriteLine($"Namn: ### {user.FirstName} {user.LastName} ### ");
+            Console.WriteLine($"Email ### {user.Email} ### ");
+            Console.WriteLine();
+           
         }
 
         Console.WriteLine("Tryck på en knapp för att komma tillbaka till huvudmeny...");
@@ -105,17 +108,17 @@ internal class Menu
         Console.Clear();
 
         var user = new User();
-        var users = _userList.GetUsers();
+        var users = _userList.GetUsersFromJsonList();
         
         Console.Write("Ange användarens email för att visa information: ");
         string userEmail = Console.ReadLine();
 
         Console.Clear();
 
-        var selectedUser = _userList.GetUserFromUserList(userEmail);   /// selectedUser hämtar ut användarens email från UserList. userEmail kan vara null men checkas i If satsen.
+        var selectedUser = _userList.GetUserFromUserList(userEmail);                                         /// selectedUser hämtar ut användarens email från UserList. userEmail kan vara null men checkas i If satsen.
         if (selectedUser != null)
         {
-            Console.WriteLine($"Namn: {selectedUser.FirstName} {selectedUser.LastName}");  /// fårn GetUserFromUserList klassen hämtas korrekt info om användaren baserat på Epost.
+            Console.WriteLine($"Namn: {selectedUser.FirstName} {selectedUser.LastName}");                   /// från GetUserFromUserList klassen hämtas korrekt info om användaren baserat på Epost.
             Console.WriteLine($"Email: {selectedUser.Email}");
             Console.WriteLine($"Address: {selectedUser.Address}");
             Console.WriteLine($"Telefon: {selectedUser.PhoneNumber}");
@@ -133,16 +136,16 @@ internal class Menu
     {
 
         Console.Clear();
-        Console.Write("ange email för användaren du vill ta bort: ");
+        Console.Write("ange email för användaren du vill ta bort: ");                       
         var user = new User();
-        string userEmail = Console.ReadLine();
+        string userEmail = Console.ReadLine();                                          
 
         Console.Clear();
 
-        var userToRemove = _userList.GetUserFromUserList(userEmail);   /// samma logik som i ViewContactInformation 
-        if (userToRemove != null)
-        {
-            _userList.RemoveUserFromUserList(userToRemove);
+        var userToRemove = _userList.GetUserFromUserList(userEmail);                                    ///  Ungefär samma funktionalitet som ViewContactInfo()
+        if (userToRemove != null)                                                                      ///  Vi checkar ifall de finns en användare med den email som skrivs in
+        {                                                                                              ///  Ifall de finns så kallar vi på RemoveUserFromList metoden. 
+            _userList.RemoveUserFromUserList(userEmail);                                                
             Console.WriteLine($" Användaren har tagits bort...");
         }
         else 
