@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AddressBook.Services
 {
-    internal class UserList
+    public class UserList
     {
         private  List<User> _users = [];
         private readonly FileService _fileService = new FileService(@"C:\Projects\content.json");
